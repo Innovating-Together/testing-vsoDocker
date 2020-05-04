@@ -6,4 +6,6 @@ dependencies:
   - pytest=5.0.1
   - requests=2.22.0
   - pylint
-  - pyspark=2.4.4
+  - setuptools=40.2.0
+  - pip:
+    - databricks-connect==6.1.0
