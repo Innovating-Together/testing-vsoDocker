@@ -3,9 +3,4 @@ channels:
   - conda-forge
 dependencies:
   - python
-  - pytest
-  - requests
-  - pylint
-  - setuptools
-  - pip:
-    - databricks-connect==6.1.0
+
