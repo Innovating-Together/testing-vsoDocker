@@ -21,7 +21,7 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
 RUN apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates libicu57 libssl1.0.2 curl git && \
+    apt-get install -y wget bzip2 ca-certificates curl git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -46,27 +46,12 @@ RUN conda env create -f environment.yml
 # Initialize conda in bash config fiiles:
 RUN echo "conda activate pyspark" >> ~/.bashrc
 
-# PowerShell Core
-ARG PS_VERSION=6.2.3
-ARG PS_PACKAGE=powershell_${PS_VERSION}-1.debian.9_amd64.deb
-ARG PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
-
-# Download the Linux package and save it
-ADD ${PS_PACKAGE_URL} /tmp/powershell.deb
-
-# Define ENVs for Localization/Globalization
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    # set a fixed location for the Module analysis cache
-    PSModuleAnalysisCachePath=/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache
 
 
 
 # VSCode DevContainers
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
-    && apt install -y /tmp/powershell.deb \
     #
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
